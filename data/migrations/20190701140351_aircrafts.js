@@ -8,9 +8,9 @@ exports.up = function(knex) {
     tbl.string("engine_type");
     tbl.string("remarks");
     tbl
-      .integer("flight_id")
+      .integer("user_id")
       .references("id")
-      .inTable("flights");
+      .inTable("users");
     tbl.timestamps(true, true);
   });
 };
