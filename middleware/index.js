@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const auth = require("../routes/auth");
 const flights = require("../routes/flights");
+const aircrafts = require("../routes/aircrafts");
 
 const configureMiddleware = server => {
   server.use(json);
@@ -13,6 +14,7 @@ const configureMiddleware = server => {
   server.use(cors());
   server.use("/api/auth", auth);
   server.use("/api/flights", flights);
+  server.use("/api/aircrafts", aircrafts);
 };
 
 module.exports = {
