@@ -9,6 +9,12 @@ const findBy = (tbl, filter) =>
 
 const findAllBy = (tbl, filter) => db(tbl).where(filter);
 
+const findAllByWithAircraft = id =>
+  db("flights as f")
+    .select("f.*", "a.make", "a.model", "a.ident")
+    .join("aircrafts as a", "a.id", "f.aircraft_id")
+    .where("f.user_id", id);
+
 const add = (tbl, item) =>
   db(tbl)
     .insert(item)
@@ -29,5 +35,6 @@ module.exports = {
   add,
   findAllBy,
   update,
-  remove
+  remove,
+  findAllByWithAircraft
 };
