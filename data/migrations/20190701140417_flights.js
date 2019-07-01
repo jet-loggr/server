@@ -22,6 +22,10 @@ exports.up = function(knex) {
       .integer("user_id")
       .references("id")
       .inTable("users");
+    tbl
+      .integer("aircraft_id")
+      .references("id")
+      .inTable("aircrafts");
     tbl.timestamps(true, true);
   });
 };
