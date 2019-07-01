@@ -30,7 +30,7 @@ route.get("/", authenticate, async (req, res) => {
   const user_id = req.decoded.id;
 
   try {
-    const aircrafts = await models.findAllBy("aircrafts", { user_id });
+    const aircrafts = await models.findAllBy("aircrafts", { user_id: user_id });
     res.status(200).json(aircrafts);
   } catch ({ message }) {
     res.status(500).json({ message });
