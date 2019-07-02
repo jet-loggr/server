@@ -44,7 +44,7 @@ const findTotalFlightInformation = user_id =>
     .count("* as totalflightcount")
     .sum("duration as totalduration")
     .sum("day_landings as totaldaylandings")
-    .sum("day_landings as totalnightlandings")
+    .sum("night_landings as totalnightlandings")
     .select({
       "totalpendingcount": db("flights")
         .count("*")
