@@ -35,7 +35,8 @@ const findDailyFlightsInCurrentWeek = user_id =>
     .select("date")
     .count("date as count")
     .where({user_id})
-    .groupBy("date");
+    .groupBy("date")
+    .orderBy("date");
 
 const add = (tbl, item) =>
   db(tbl)
