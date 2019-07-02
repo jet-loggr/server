@@ -54,6 +54,52 @@ route.get("/pie-chart", authenticate, async (req, res) => {
   }
 });
 
+// @route     /api/flights/:id
+// @desc      GET daily count of all flights by user in current week
+// @Access    Private
+route.get("/line-graph", authenticate, async(req, res) => {
+  const DATE_FORMAT = "MMM D (ddd)";
+
+  const { id } = req.decoded;
+
+  try {
+    let flightCounts = await models.findDailyFlightsInCurrentWeek(id);
+    flightCounts = flightCounts.filter(row => Moment(row.date).isSame(new Date(), "week"))
+                                .map(row => ({
+                                  date: Moment(row.date).format(DATE_FORMAT),
+                                  count: row.count
+                                }));
+
+    let nextDate = Moment().startOf("week");
+
+    const dailyFlightsInCurrentWeek = Array(7).fill().map((el, i) => {
+      const returnDate = Moment(nextDate).format(DATE_FORMAT);
+      nextDate = Moment(nextDate).add(1, "day");
+
+      return {
+        date: returnDate,
+        count: 0
+      };
+    });
+
+    flightCounts.forEach(row => {
+      for (let i = 0, len = dailyFlightsInCurrentWeek.length; i < len; i++) {
+        if (row.date === dailyFlightsInCurrentWeek[i].date) {
+          dailyFlightsInCurrentWeek[i] = {
+            date: dailyFlightsInCurrentWeek[i].date,
+            count: row.count
+          }
+          break;
+        }
+      }
+    });
+
+    res.status(200).json(dailyFlightsInCurrentWeek);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
 // @route    /api/flights/:id
 // @desc     GET one flights
 // @Access   Private
