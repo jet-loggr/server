@@ -24,7 +24,7 @@ route.post("/", authenticate, async (req, res) => {
 // @route    /api/flights
 // @desc     GET all flights
 // @Access   Private
-route.get("/", authenticated, async (req, res) => {
+route.get("/", authenticate, async (req, res) => {
   const { id } = req.decoded;
 
   try {
