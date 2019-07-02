@@ -16,7 +16,7 @@ route.get("/", authenticate, async (req, res) => {
   }
 });
 
-route.put("/", async (req, res) => {
+route.put("/", authenticate, async (req, res) => {
   const { id } = req.decoded;
 
   try {
