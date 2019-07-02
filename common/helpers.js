@@ -35,9 +35,24 @@ const findDailyFlightsInCurrentWeek = user_id =>
   db("flights")
     .select("date")
     .count("date as count")
-    .where({user_id})
+    .where({ user_id })
     .groupBy("date")
     .orderBy("date");
+
+const findTotalFlightInformation = user_id =>
+  db("flights")
+    .count("* as totalflightcount")
+    .sum("duration as totalduration")
+    .sum("day_landings as totaldaylandings")
+    .sum("day_landings as totalnightlandings")
+    .select({
+      "totalpendingcount": db("flights")
+        .count("*")
+        .where({ user_id })
+        .andWhere({ pending: 1 })
+    })
+    .where({ user_id })
+    .first();
 
 const add = (tbl, item) =>
   db(tbl)
@@ -64,5 +79,6 @@ module.exports = {
   findAllByWithAircraft,
   aggregatedChart,
   findDailyFlightsInCurrentWeek,
-  findAllByWithAircraftByUser
+  findAllByWithAircraftByUser,
+  findTotalFlightInformation
 };
