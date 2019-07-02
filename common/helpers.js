@@ -15,6 +15,12 @@ const findAllByWithAircraft = id =>
     .join("aircrafts as a", "a.id", "f.aircraft_id")
     .where("f.user_id", id);
 
+const findAircraftUsageFrequencyCountsByUser = id =>
+  db("flights")
+    .count("aircraft_id")
+    .where("user_id", id)
+    .groupBy("aircraft_id");
+
 const add = (tbl, item) =>
   db(tbl)
     .insert(item)
