@@ -28,6 +28,7 @@
     "knex": "^0.18.0",
     "morgan": "^1.9.1",
     "pg": "^7.11.0",
+    "react-vis": "^1.11.7",
     "sqlite3": "^4.0.9"
   },
   "devDependencies": {
