@@ -62,7 +62,7 @@ route.get("/:id", authenticate, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const flight = await models.findBy("flights", { user_id, id });
+    const flight = await models.findAllByWithAircraftByUser(id, user_id);
     res.status(200).json(flight);
   } catch ({ message }) {
     res.status(500).json({ message });
@@ -74,9 +74,11 @@ route.get("/:id", authenticate, async (req, res) => {
 // @Access    Private
 route.get("/usage", authenticate, async (req, res) => {
   const user_id = req.decoded.id;
-  
+
   try {
-    const aircraftUsageFrequencies = await models.findAircraftUsageFrequencyCountsByUser(user_id);
+    const aircraftUsageFrequencies = await models.findAircraftUsageFrequencyCountsByUser(
+      user_id
+    );
     res.status(200).json(aircraftUsageFrequencies);
   } catch ({ message }) {
     res.status(500).json(message);
