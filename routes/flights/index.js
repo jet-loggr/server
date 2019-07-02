@@ -30,6 +30,30 @@ route.get("/", authenticate, async (req, res) => {
   }
 });
 
+// @route    /api/flights/aggregation
+// @desc     GET all flights aggregated by aircraft
+// @Access   Private
+route.get("/pie-chart", authenticate, async (req, res) => {
+  const { id } = req.decoded;
+
+  try {
+    const flights = await models.aggregatedChart(id);
+
+    const totalCount = flights.rows.reduce((a, b) => a + Number(b.count), 0);
+
+    const newFlights = flights.rows.map(f => {
+      return {
+        ...f,
+        percentage: Math.round((Number(f.count) / totalCount) * 100 * 100) / 100
+      };
+    });
+
+    res.status(200).json(newFlights);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
 // @route    /api/flights/:id
 // @desc     GET one flights
 // @Access   Private

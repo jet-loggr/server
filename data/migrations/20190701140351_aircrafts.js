@@ -1,7 +1,8 @@
 exports.up = function(knex) {
   return knex.schema.createTable("aircrafts", tbl => {
     tbl.increments();
-    tbl.string("ident");
+    tbl.unique(["make", "model", "ident"]);
+    tbl.string("ident").unique();
     tbl.string("make");
     tbl.string("model");
     tbl.integer("engine_count");

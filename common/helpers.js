@@ -15,11 +15,11 @@ const findAllByWithAircraft = id =>
     .join("aircrafts as a", "a.id", "f.aircraft_id")
     .where("f.user_id", id);
 
-const findAircraftUsageFrequencyCountsByUser = id =>
-  db("flights")
-    .count("aircraft_id")
-    .where("user_id", id)
-    .groupBy("aircraft_id");
+const aggregatedChart = id =>
+  db.raw(
+    `SELECT  make, model, COUNT(*) FROM flights as f JOIN aircrafts as a ON a.id = f.aircraft_id WHERE f.user_id = ${id} GROUP BY  make, model`
+  );
+
 
 const add = (tbl, item) =>
   db(tbl)
@@ -43,5 +43,6 @@ module.exports = {
   update,
   remove,
   findAllByWithAircraft,
-  findAircraftUsageFrequencyCountsByUser
+  aggregatedChart
+
 };
