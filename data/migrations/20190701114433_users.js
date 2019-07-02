@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     tbl.string("image_url");
     tbl.string("nickname");
     tbl.string("sub");
+    tbl.string("signature");
   });
 };
 
