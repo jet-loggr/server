@@ -42,7 +42,7 @@ exports.seed = function(knex) {
           user_id: 4
         },
         {
-          ident: "126",
+          ident: "136",
           make: "CRJ",
           model: "900",
           engine_count: 2,
@@ -60,7 +60,7 @@ exports.seed = function(knex) {
           user_id: 6
         },
         {
-          ident: "128",
+          ident: "118",
           make: "CRJ",
           model: "900",
           engine_count: 2,
@@ -69,7 +69,7 @@ exports.seed = function(knex) {
           user_id: 7
         },
         {
-          ident: "129",
+          ident: "149",
           make: "CRJ",
           model: "900",
           engine_count: 2,
@@ -78,7 +78,7 @@ exports.seed = function(knex) {
           user_id: 8
         },
         {
-          ident: "122",
+          ident: "192",
           make: "CRJ",
           model: "900",
           engine_count: 2,
@@ -87,7 +87,7 @@ exports.seed = function(knex) {
           user_id: 9
         },
         {
-          ident: "121",
+          ident: "181",
           make: "CRJ",
           model: "900",
           engine_count: 2,
