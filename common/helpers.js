@@ -20,7 +20,8 @@ const findAllByWithAircraftByUser = (id, user_id) =>
     .select("f.*", "a.make", "a.model", "a.ident")
     .join("aircrafts as a", "a.id", "f.aircraft_id")
     .where("f.user_id", user_id)
-    .andWhere("f.id", id);
+    .andWhere("f.id", id)
+    .first();
 
 const aggregatedChart = user_id =>
   db("flights as f")
