@@ -22,10 +22,13 @@ const findAllByWithAircraftByUser = (id, user_id) =>
     .where("f.user_id", user_id)
     .andWhere("f.id", id);
 
-const aggregatedChart = id =>
-  db.raw(
-    `SELECT  make, model, COUNT(*) FROM flights as f JOIN aircrafts as a ON a.id = f.aircraft_id WHERE f.user_id = ${id} GROUP BY  make, model`
-  );
+const aggregatedChart = user_id =>
+  db("flights as f")
+    .select("a.make", "a.model")
+    .count("a.id as count")
+    .join("aircrafts as a", "f.aircraft_id", "a.id")
+    .where("f.user_id", user_id)
+    .groupBy("a.make", "a.model");
 
 const add = (tbl, item) =>
   db(tbl)
