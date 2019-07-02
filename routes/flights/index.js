@@ -13,12 +13,24 @@ const WEEK_DAYS_FORMAT = "MMM D (ddd)";
 route.post("/", authenticate, async (req, res) => {
   const { id } = req.decoded;
 
-  try {
-    const [addedId] = await models.add("flights", { ...req.body, user_id: id });
-    res.status(201).json({ message: "Flight was added", flight_id: addedId });
-  } catch ({ message }) {
-    res.status(500).json({ message });
-  }
+  if (req.body.approaches && isNaN(req.body.approaches)) {
+    res.status(400).json({ message: "Please supply a numerical value for the approaches count field."});
+  } else if (req.body.legs && isNaN(req.body.legs)) {
+    res.status(400).json({ message: "Please supply a numerical value for the leg count field."});
+  } else if (req.body.day_landings && isNaN(req.body.day_landings)) {
+    res.status(400).json({ message: "Please supply a numerical value for the day landing count field."});
+  } else if (req.body.night_landings && isNaN(req.body.night_landings)) {
+    res.status(400).json({ message: "Please supply a numerical value for the night landing count field."});
+  } else if (req.body.duration && isNaN(req.body.duration)) {
+    res.status(400).json({ message: "Please supply a numerical value (in hour units) for the duration field."});
+  } else {
+    try {
+      const [addedId] = await models.add("flights", { ...req.body, user_id: id });
+      res.status(201).json({ message: "Flight was added", flight_id: addedId });
+    } catch ({ message }) {
+      res.status(500).json({ message });
+    }
+  } 
 });
 
 // @route    /api/flights
@@ -149,23 +161,35 @@ route.put("/:id", authenticate, async (req, res) => {
   const user_id = req.decoded.id;
   const { id } = req.params;
 
-  try {
-    const updatedFlightId = await models.update(
-      "flights",
-      { user_id, id },
-      { ...req.body }
-    );
-
-    if (updatedFlightId) {
-      res.json({
-        message: "Flight Updated successfully",
-        flight_id: updatedFlightId
-      });
-    } else {
-      res.status(400).json({ message: "Failed to update flight" });
+  if (req.body.approaches && isNaN(req.body.approaches)) {
+    res.status(400).json({ message: "Please supply a numerical value for the approaches count field."});
+  } else if (req.body.legs && isNaN(req.body.legs)) {
+    res.status(400).json({ message: "Please supply a numerical value for the leg count field."});
+  } else if (req.body.day_landings && isNaN(req.body.day_landings)) {
+    res.status(400).json({ message: "Please supply a numerical value for the day landing count field."});
+  } else if (req.body.night_landings && isNaN(req.body.night_landings)) {
+    res.status(400).json({ message: "Please supply a numerical value for the night landing count field."});
+  } else if (req.body.duration && isNaN(req.body.duration)) {
+    res.status(400).json({ message: "Please supply a numerical value (in hour units) for the duration field."});
+  } else {
+    try {
+      const updatedFlightId = await models.update(
+        "flights",
+        { user_id, id },
+        { ...req.body }
+      );
+  
+      if (updatedFlightId) {
+        res.json({
+          message: "Flight Updated successfully",
+          flight_id: updatedFlightId
+        });
+      } else {
+        res.status(400).json({ message: "Failed to update flight" });
+      }
+    } catch ({ message }) {
+      res.status(500).json({ message });
     }
-  } catch ({ message }) {
-    res.status(500).json({ message });
   }
 });
 
