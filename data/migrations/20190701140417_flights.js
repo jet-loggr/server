@@ -17,7 +17,7 @@ exports.up = function(knex) {
     tbl.integer("legs");
     tbl.integer("day_landings");
     tbl.integer("night_landings");
-    tbl.string("duration");
+    tbl.double("duration");
     tbl
       .integer("user_id")
       .references("id")
