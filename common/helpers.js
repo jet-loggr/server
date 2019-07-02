@@ -15,13 +15,13 @@ const findAllByWithAircraft = id =>
     .join("aircrafts as a", "a.id", "f.aircraft_id")
     .where("f.user_id", id);
 
-const findAllByWithAircraftByUser = (id, user_id) => {
+const findAllByWithAircraftByUser = (id, user_id) =>
   db("flights as f")
     .select("f.*", "a.make", "a.model", "a.ident")
     .join("aircrafts as a", "a.id", "f.aircraft_id")
     .where("f.user_id", user_id)
     .andWhere("f.id", id);
-};
+
 const aggregatedChart = id =>
   db.raw(
     `SELECT  make, model, COUNT(*) FROM flights as f JOIN aircrafts as a ON a.id = f.aircraft_id WHERE f.user_id = ${id} GROUP BY  make, model`
