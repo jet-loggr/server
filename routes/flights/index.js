@@ -102,7 +102,12 @@ route.get("/line-graph", authenticate, async(req, res) => {
       }
     });
 
-    res.status(200).json(dailyFlightsInCurrentWeek);
+    const retCountsObj = {};
+    dailyFlightsInCurrentWeek.forEach(day => {
+      retCountsObj[day.date] = day.count;
+    });
+
+    res.status(200).json(retCountsObj);
   } catch ({ message }) {
     res.status(500).json({ message });
   }
