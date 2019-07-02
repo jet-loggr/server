@@ -6,7 +6,7 @@ exports.up = function(knex) {
     tbl.string("duty_on");
     tbl.string("duty_off");
     tbl.string("hotel");
-    tbl.string("duty_time");
+    tbl.double("duty_time");
     tbl.boolean("deadhead").defaultsTo(false);
     tbl.integer("approaches");
     tbl.string("remarks");
