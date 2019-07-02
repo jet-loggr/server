@@ -113,6 +113,17 @@ route.get("/line-graph", authenticate, async(req, res) => {
   }
 });
 
+route.get("/totals", authenticate, async (req, res) => {
+  const { id } = req.decoded;
+
+  try {
+    const totals = await models.findTotalFlightInformation(id);
+    res.status(200).json(totals);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+});
+
 // @route    /api/flights/:id
 // @desc     GET one flights
 // @Access   Private
