@@ -115,22 +115,6 @@ route.get("/:id", authenticate, async (req, res) => {
   }
 });
 
-// @route     /api/flights/usage
-// @desc      GET count of no. of times user flew each AC
-// @Access    Private
-route.get("/usage", authenticate, async (req, res) => {
-  const user_id = req.decoded.id;
-
-  try {
-    const aircraftUsageFrequencies = await models.findAircraftUsageFrequencyCountsByUser(
-      user_id
-    );
-    res.status(200).json(aircraftUsageFrequencies);
-  } catch ({ message }) {
-    res.status(500).json(message);
-  }
-});
-
 // @route    /api/flights/:id
 // @desc     PUT one flights
 // @Access   Private
