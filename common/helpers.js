@@ -20,6 +20,7 @@ const aggregatedChart = id =>
     `SELECT  make, model, COUNT(*) FROM flights as f JOIN aircrafts as a ON a.id = f.aircraft_id WHERE f.user_id = ${id} GROUP BY  make, model`
   );
 
+
 const add = (tbl, item) =>
   db(tbl)
     .insert(item)
@@ -43,4 +44,5 @@ module.exports = {
   remove,
   findAllByWithAircraft,
   aggregatedChart
+
 };
