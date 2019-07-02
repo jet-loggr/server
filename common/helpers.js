@@ -42,5 +42,6 @@ module.exports = {
   findAllBy,
   update,
   remove,
-  findAllByWithAircraft
+  findAllByWithAircraft,
+  findAircraftUsageFrequencyCountsByUser
 };
