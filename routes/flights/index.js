@@ -40,14 +40,12 @@ route.get("/pie-chart", authenticate, async (req, res) => {
   try {
     const flights = await models.aggregatedChart(id);
 
-    const totalCount = flights.rows.reduce((a, b) => a + Number(b.count), 0);
+    const totalCount = flights.reduce((a, b) => a + Number(b.count), 0);
 
-    const newFlights = flights.rows.map(f => {
-      return {
-        ...f,
-        percentage: Math.round((Number(f.count) / totalCount) * 100 * 100) / 100
-      };
-    });
+    const newFlights = flights.map(flight => ({
+      ...flight,
+      percentage: Math.round((Number(flight.count) / totalCount) * 100 * 100) / 100
+    }));
 
     res.status(200).json(newFlights);
   } catch ({ message }) {
@@ -55,7 +53,7 @@ route.get("/pie-chart", authenticate, async (req, res) => {
   }
 });
 
-// @route     /api/flights/:id
+// @route     /api/flights/line-graph
 // @desc      GET daily count of all flights by user in current week
 // @Access    Private
 route.get("/line-graph", authenticate, async(req, res) => {
