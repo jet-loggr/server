@@ -48,6 +48,8 @@ route.get("/", authenticate, async (req, res) => {
       duty_off: Moment(flight.duty_off).format(DATE_TIME_FORMAT)
     }));
 
+    flights.sort((a, b) => Moment(a.date).isAfter(b.date, "date"));
+
     res.status(200).json(flights);
   } catch ({ message }) {
     res.status(500).json({ message });
