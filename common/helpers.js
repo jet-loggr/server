@@ -31,7 +31,7 @@ const aggregatedChart = user_id =>
     .where("f.user_id", user_id)
     .groupBy("a.make", "a.model");
 
-const findDailyFlightsInCurrentWeek = user_id =>
+const findDailyFlightHourCountsInCurrentWeek = user_id =>
   db("flights")
     .select("date")
     .count("date as count")
@@ -78,7 +78,7 @@ module.exports = {
   remove,
   findAllByWithAircraft,
   aggregatedChart,
-  findDailyFlightsInCurrentWeek,
+  findDailyFlightHourCountsInCurrentWeek,
   findAllByWithAircraftByUser,
   findTotalFlightInformation
 };
