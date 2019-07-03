@@ -36,19 +36,16 @@ route.post("/", authenticate, async (req, res) => {
 // @route    /api/flights
 // @desc     GET all flights
 // @Access   Private
-route.get("/", authenticate, async (req, res) => {
-  const { id } = req.decoded;
+route.get("/", async (req, res) => {
 
   try {
-    let flights = await models.findAllByWithAircraft(id);
+    let flights = await models.findAllByWithAircraft(1);
     flights = flights.map(flight => ({
       ...flight,
       date: Moment(flight.date).format(DATE_FORMAT),
       duty_on: Moment(flight.duty_on).format(DATE_TIME_FORMAT),
       duty_off: Moment(flight.duty_off).format(DATE_TIME_FORMAT)
     }));
-
-    flights.sort((a, b) => Moment(a.date).isAfter(b.date, "date"));
 
     res.status(200).json(flights);
   } catch ({ message }) {
