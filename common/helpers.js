@@ -13,7 +13,8 @@ const findAllByWithAircraft = id =>
   db("flights as f")
     .select("f.*", "a.make", "a.model", "a.ident")
     .join("aircrafts as a", "a.id", "f.aircraft_id")
-    .where("f.user_id", id);
+    .where("f.user_id", id)
+    .orderBy("f.date");
 
 const findAllByWithAircraftByUser = (id, user_id) =>
   db("flights as f")
