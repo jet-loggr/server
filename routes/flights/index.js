@@ -85,14 +85,14 @@ route.get("/line-graph", authenticate, async(req, res) => {
   try {
     let nextDate = Moment().subtract(8, "days");
 
-    let flightCounts = await models.findDailyFlightsInCurrentWeek(id);
+    let flightCounts = await models.findDailyFlightHourCountsInCurrentWeek(id);
     flightCounts = flightCounts.filter(row => Moment(row.date).isAfter(nextDate))
                                 .map(row => ({
                                   date: Moment(row.date).format(WEEK_DAYS_FORMAT),
                                   count: row.count
                                 }));
 
-    const dailyFlightsInCurrentWeek = Array(7).fill().map((el, i) => {
+    const dailyFlightHoursInCurrentWeek = Array(7).fill().map((el, i) => {
       nextDate = Moment(nextDate).add(1, "day");
 
       return {
@@ -102,10 +102,10 @@ route.get("/line-graph", authenticate, async(req, res) => {
     });
 
     flightCounts.forEach(row => {
-      for (let i = 0, len = dailyFlightsInCurrentWeek.length; i < len; i++) {
-        if (row.date === dailyFlightsInCurrentWeek[i].date) {
-          dailyFlightsInCurrentWeek[i] = {
-            date: dailyFlightsInCurrentWeek[i].date,
+      for (let i = 0, len = dailyFlightHoursInCurrentWeek.length; i < len; i++) {
+        if (row.date === dailyFlightHoursInCurrentWeek[i].date) {
+          dailyFlightHoursInCurrentWeek[i] = {
+            date: dailyFlightHoursInCurrentWeek[i].date,
             count: row.count
           }
           break;
@@ -114,7 +114,7 @@ route.get("/line-graph", authenticate, async(req, res) => {
     });
 
     const retCountsObj = {};
-    dailyFlightsInCurrentWeek.forEach(day => {
+    dailyFlightHoursInCurrentWeek.forEach(day => {
       retCountsObj[day.date] = day.count;
     });
 
