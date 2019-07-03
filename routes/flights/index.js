@@ -83,7 +83,7 @@ route.get("/line-graph", authenticate, async(req, res) => {
   const { id } = req.decoded;
 
   try {
-    let nextDate = Moment().subtract(7, "days");
+    let nextDate = Moment().subtract(8, "days");
 
     let flightCounts = await models.findDailyFlightsInCurrentWeek(id);
     flightCounts = flightCounts.filter(row => Moment(row.date).isAfter(nextDate))
