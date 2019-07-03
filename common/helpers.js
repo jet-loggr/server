@@ -34,7 +34,7 @@ const aggregatedChart = user_id =>
 const findDailyFlightHourCountsInCurrentWeek = user_id =>
   db("flights")
     .select("date")
-    .count("date as count")
+    .sum("duration as count")
     .where({ user_id })
     .groupBy("date")
     .orderBy("date");
